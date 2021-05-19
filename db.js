@@ -5,14 +5,13 @@ const sequelize = new Sequelize('gamedb', process.env.USERNAME, process.env.PASS
     dialect: 'postgres'
 })
 
-sequelize.authenticate().then(
-    function success() {
-        console.log("Connected to DB");
-    },
-
-    function fail(err) {
-        console.log(`Error: ${err}`);
+const sync = async () => {
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
     }
-)
+}
 
-module.exports = { sequelize };
+module.exports = { sequelize, sync };
