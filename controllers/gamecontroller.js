@@ -5,13 +5,11 @@ const Game = require('../models/game')(sequelize, DataTypes);
 
 router.get('/all', (req, res) => {
   Game.findAll({ where: { owner_id: req.user.id } }).then(
-    (data) => {
+    (data) =>
       res.status(200).json({
         games,
         message: 'Data fetched.',
-      });
-    },
-
+      }),
     () => {
       res.status(500).json({
         message: 'Data not found',
@@ -27,8 +25,7 @@ router.get('/:id', (req, res) => {
         game,
       });
     },
-
-    (err) => {
+    () => {
       res.status(500).json({
         message: 'Data not found.',
       });
@@ -51,7 +48,6 @@ router.post('/create', (req, res) => {
         message: 'Game created.',
       });
     },
-
     (err) => {
       res.status(500).send(err.message);
     }
@@ -80,7 +76,6 @@ router.put('/update/:id', (req, res) => {
         message: 'Successfully updated.',
       });
     },
-
     (err) => {
       res.status(500).json({
         message: err.message,
@@ -102,7 +97,6 @@ router.delete('/remove/:id', (req, res) => {
         message: 'Successfully deleted',
       });
     },
-
     (err) => {
       res.status(500).json({
         error: err.message,
